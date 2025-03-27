@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="script.js" defer></script>
-</head>
-<body>
-    
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="script.js" defer></script>
+	</head>
+	<body>
+		<h1>The Library</h1>
+		<button type="button" name="add-book" id="add-book">Add Book?</button>
+		<dialog>
+			<form action="post">
+
+				<div>
+                    <label for="book-title">What is the books title?</label>
+                    <input type="text" name="book-title" id="book-title" required/>
+                </div>
+
+				<div>
+                    <label for="book-author">Who is the author?</label>
+                    <input type="text" name="book-author" id="book-author" required/>
+                </div>
+
+				<div>
+                    <label for="book-pages">How many pages is it?</label>
+                    <input type="number" name="book-pages" id="book-pages" step="10" required/>
+                </div>
+
+				<div>
+                    <label for="book-genre">What genre is this book?</label>
+                    <select name="book-genre" id="book-genre" required>
+                        <option value="" selected></option>
+                        <option value="sci-fi">Sci-Fi</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="literature">Literature</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="education">Education</option>
+                    </select>
+                </div>
+				<button type="button" id="submit-book">Submit Book</button>
+                <button type="button" id="cancel-book">Cancel</button>
+			</form>
+		</dialog>
+		<div class="library-display"></div>
+	</body>
 </html>
