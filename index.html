@@ -4,46 +4,139 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
 		<script src="script.js" defer></script>
 	</head>
 	<body>
-		<h1>The Library</h1>
-		<button type="button" name="add-book" id="add-book">Add Book?</button>
+		<main>
+			<h1>The Library</h1>
+
+			<div>
+				<form id="main-form" action="post">
+					<fieldset>
+						<legend>Add a New Book?</legend>
+						<div>
+							<label for="book-title">What is the books title?</label>
+							<input
+								type="text"
+								name="book-title"
+								id="book-title-main"
+								required />
+						</div>
+						<div>
+							<label for="book-author">Who is the author?</label>
+							<input
+								type="text"
+								name="book-author"
+								id="book-author-main"
+								required />
+						</div>
+						<div>
+							<label for="book-pages">How many pages is it?</label>
+							<input
+								type="number"
+								name="book-pages"
+								id="book-pages-main"
+								step="10"
+								min="0"
+								required />
+						</div>
+						<div>
+							<label for="book-genre">What genre is this book?</label>
+							<select name="book-genre" id="book-genre-main" required>
+								<option value="" selected></option>
+								<option value="Sci-fi">Sci-Fi</option>
+								<option value="Fantasy">Fantasy</option>
+								<option value="Literature">Literature</option>
+								<option value="Thriller">Thriller</option>
+								<option value="Mystery">Mystery</option>
+								<option value="Non-Fiction">Non-Fiction</option>
+								<option value="Education">Education</option>
+							</select>
+						</div>
+						<div>
+							<input
+								type="submit"
+								id="submit-book-main"
+								value="Submit Book" />
+							<!-- <button type="button" id="submit-book-main">Submit Book</button> -->
+							<button type="button" id="cancel-book-main">
+								Cancel
+							</button>
+						</div>
+					</fieldset>
+				</form>
+
+				<button type="button" name="add-book" id="add-book">
+					Add Book? (Dialog)
+				</button>
+
+			</div>
+
+			<div class="library-display"></div>
+			<table id="library-table">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Author</th>
+						<th>Pages</th>
+						<th>Genre</th>
+					</tr>
+				</thead>
+				<tbody id="library-table-content"></tbody>
+			</table>
+			<div id="library-card-container">
+
+			</div>
+		</main>
 		<dialog>
-			<form action="post">
+			<form id="dialog-form" action="post">
+				<div>
+					<label for="book-title">What is the books title?</label>
+					<input
+						type="text"
+						name="book-title"
+						id="book-title"
+						required />
+				</div>
+				<div>
+					<label for="book-author">Who is the author?</label>
+					<input
+						type="text"
+						name="book-author"
+						id="book-author"
+						required />
+				</div>
 
 				<div>
-                    <label for="book-title">What is the books title?</label>
-                    <input type="text" name="book-title" id="book-title" required/>
-                </div>
+					<label for="book-pages">How many pages is it?</label>
+					<input
+						type="number"
+						name="book-pages"
+						id="book-pages"
+						step="10"
+						min="0"
+						required />
+				</div>
 
 				<div>
-                    <label for="book-author">Who is the author?</label>
-                    <input type="text" name="book-author" id="book-author" required/>
-                </div>
-
+					<label for="book-genre">What genre is this book?</label>
+					<select name="book-genre" id="book-genre" required>
+						<option value="" selected></option>
+						<option value="Sci-fi">Sci-Fi</option>
+						<option value="Fantasy">Fantasy</option>
+						<option value="Literature">Literature</option>
+						<option value="Thriller">Thriller</option>
+						<option value="Mystery">Mystery</option>
+						<option value="Non-Fiction">Non-Fiction</option>
+						<option value="Education">Education</option>
+					</select>
+				</div>
 				<div>
-                    <label for="book-pages">How many pages is it?</label>
-                    <input type="number" name="book-pages" id="book-pages" step="10" required/>
-                </div>
-
-				<div>
-                    <label for="book-genre">What genre is this book?</label>
-                    <select name="book-genre" id="book-genre" required>
-                        <option value="" selected></option>
-                        <option value="sci-fi">Sci-Fi</option>
-                        <option value="fantasy">Fantasy</option>
-                        <option value="literature">Literature</option>
-                        <option value="thriller">Thriller</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="non-fiction">Non-Fiction</option>
-                        <option value="education">Education</option>
-                    </select>
-                </div>
-				<button type="button" id="submit-book">Submit Book</button>
-                <button type="button" id="cancel-book">Cancel</button>
+					<input type="submit" id="submit-book" value="Submit Book" />
+					<button type="button" id="cancel-book">Cancel</button>
+				</div>
 			</form>
 		</dialog>
-		<div class="library-display"></div>
 	</body>
 </html>
