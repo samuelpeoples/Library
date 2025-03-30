@@ -6,76 +6,45 @@ const cardContainer = document.querySelector("#library-card-container");
 
 const dialog = document.querySelector("dialog");
 
-function Book(title, author, pages, genre) {
+function Book(title, author, pages, genre, read) {
 	this.title = title;
 	this.author = author;
 	this.pages = pages;
 	this.genre = genre;
-	this.Info = function () {
-		return `${title} by ${author}, ${pages} pages, ${genre}`;
+	this.read = read;
+	this.info = function () {
+		return `${this.title}, ${this.author}, ${this.pages}, ${this.genre}, ${this.read}`;
 	};
+	if (read == undefined) this.read = false;
+	this.toggleRead = function () {
+		this.read = !this.read;
+	};
+
 }
 
 function addToLibrary(book) {
 	book.id = crypto.randomUUID();
 	library.push(book);
+	console.log(book.info());
+	// if(book.read == true); book.toggleRead();
 }
 
 function displayUpdate() {
 	libraryDisplay.innerHTML = "";
 	bookTable.innerHTML = "";
 	cardContainer.innerHTML = "";
-	
+
 	let bookNum = 1;
 
 	library.forEach((book) => {
 		const index = bookNum - 1;
 
 		const bookDisplay = document.createElement("p");
-		bookDisplay.textContent = `${bookNum}: ${book.Info()}`;
+		bookDisplay.textContent = `${bookNum}: ${book.info()}`;
 
 		updateList(bookDisplay, index);
-
-		updateTable(book, bookDisplay, index);
-
-		// CARD SETUP
-
-
-
-		const bookCard = document.createElement("div");
-		bookCard.className = "card"
-		cardContainer.appendChild(bookCard);
-
-		for (const key in book) {
-			if (
-				book[key] == book.title ||
-				book[key] == book.author ||
-				book[key] == book.pages ||
-				book[key] == book.genre
-			) {
-				const bookKeyItem = document.createElement("p");
-				bookKeyItem.textContent = book[key];
-				bookCard.appendChild(bookKeyItem);
-			}
-		}
-
-		const cardButtonContainer = document.createElement("div");
-		cardButtonContainer.className = "card-delete-container";
-		bookCard.appendChild(cardButtonContainer);
-
-		const cardDeleteButton = document.createElement("button");
-		cardDeleteButton.className = "delete-button card-delete-button";
-		cardDeleteButton.textContent = "X";
-
-		cardButtonContainer.appendChild(cardDeleteButton);
-
-		cardDeleteButton.addEventListener("click", () => {
-			library.splice(index, 1);
-			console.log(library);
-			displayUpdate();
-		});
-		// END CARD SETUP
-
+		updateTable(book, index);
+		updateCards(book, index);
 		bookNum++;
 	});
 }
@@ -88,6 +57,24 @@ function updateList(bookDisplay, index) {
 	deleteButton.textContent = "X";
 	bookDisplay.appendChild(deleteButton);
 
+	// 		if (book[key] == book.read) {
+	// 		const bookKeyItem = document.createElement("td");
+	// 		bookRow.appendChild(bookKeyItem);
+
+	// 		if (book[key] == book.read) {
+	// 			const bookKeyToggle = document.createElement("input");
+	// 			bookKeyToggle.type = "checkbox";
+	// 			bookKeyToggle.name = "book-read-toggle";
+	// 			bookKeyToggle.id = "book-read-toggle";
+	// 			bookKeyToggle.value = book.read;
+	// 			bookKeyToggle.checked = book.read;
+
+	// 			bookKeyItem.appendChild(bookKeyToggle);
+	// 			bookKeyToggle.addEventListener("click", book.toggleRead() );
+	// 		}
+	// 	}
+	// }
+
 	deleteButton.addEventListener("click", () => {
 		libraryDisplay.removeChild(bookDisplay);
 		library.splice(index, 1);
@@ -96,7 +83,7 @@ function updateList(bookDisplay, index) {
 	});
 }
 
-function updateTable(book, bookDisplay, index) {
+function updateTable(book, index) {
 	const bookRow = document.createElement("tr");
 	bookTable.appendChild(bookRow);
 
@@ -113,6 +100,23 @@ function updateTable(book, bookDisplay, index) {
 			const bookKeyItem = document.createElement("td");
 			bookKeyItem.textContent = book[key];
 			bookRow.appendChild(bookKeyItem);
+		}
+
+		if (book[key] == book.read) {
+			const bookKeyItem = document.createElement("td");
+			bookRow.appendChild(bookKeyItem);
+
+			if (book[key] == book.read) {
+				const bookKeyToggle = document.createElement("input");
+				bookKeyToggle.type = "checkbox";
+				bookKeyToggle.name = "book-read-toggle";
+				bookKeyToggle.id = "book-read-toggle";
+				bookKeyToggle.value = book.read;
+				bookKeyToggle.checked = book.read;
+
+				bookKeyItem.appendChild(bookKeyToggle);
+				bookKeyToggle.addEventListener("click", book.toggleRead() );
+			}
 		}
 	}
 
@@ -133,6 +137,39 @@ function updateTable(book, bookDisplay, index) {
 	});
 }
 
+function updateCards(book, index) {
+	const bookCard = document.createElement("div");
+	bookCard.className = "card";
+	cardContainer.appendChild(bookCard);
+
+	for (const key in book) {
+		if (book[key] == book.title ||
+			book[key] == book.author ||
+			book[key] == book.pages ||
+			book[key] == book.genre) {
+			const bookKeyItem = document.createElement("p");
+			bookKeyItem.textContent = book[key];
+			bookCard.appendChild(bookKeyItem);
+		}
+	}
+
+	const cardButtonContainer = document.createElement("div");
+	cardButtonContainer.className = "card-delete-container";
+	bookCard.appendChild(cardButtonContainer);
+
+	const cardDeleteButton = document.createElement("button");
+	cardDeleteButton.className = "delete-button card-delete-button";
+	cardDeleteButton.textContent = "X";
+
+	cardButtonContainer.appendChild(cardDeleteButton);
+
+	cardDeleteButton.addEventListener("click", () => {
+		library.splice(index, 1);
+		console.log(library);
+		displayUpdate();
+	});
+}
+
 const addBookButton = document
 	.querySelector("#add-book")
 	.addEventListener("click", () => {
@@ -141,7 +178,7 @@ const addBookButton = document
 
 const submitBookButton = document
 	.querySelector("#submit-book")
-	.addEventListener("click", (e) => {
+	.addEventListener("click", () => {
 		dialog.close();
 		const newBook = new Book(
 			document.querySelector("#book-title").value,
@@ -159,7 +196,7 @@ const submitBookButton = document
 
 const submitBookButtonMain = document
 	.querySelector("#submit-book-main")
-	.addEventListener("click", (e) => {
+	.addEventListener("click", () => {
 		const newBook = new Book(
 			document.querySelector("#book-title-main").value,
 			document.querySelector("#book-author-main").value,
@@ -190,7 +227,7 @@ const cancelBookMain = document
 		dialog.close();
 	});
 
-const theHobbit = new Book("The Hobbit", "J.R.R Tolkien", 100, "Fantasy");
+const theHobbit = new Book("The Hobbit", "J.R.R Tolkien", 100, "Fantasy", true);
 const obernewtyn = new Book("Obernewtyn", "Isobelle Carmody", 200, "Fantasy");
 
 addToLibrary(theHobbit);
