@@ -212,35 +212,48 @@ const addBookButton = document
 
 const submitBookButton = document
 	.querySelector("#submit-book")
-	.addEventListener("click", () => {
-		dialog.close();
+	.addEventListener("click", (e) => {
+		const form = document.querySelector("#dialog-form");
+
+		if(form.checkValidity() == false){
+			form.reportValidity;
+			return;
+		}
+
 		const newBook = new Book(
 			document.querySelector("#book-title").value,
 			document.querySelector("#book-author").value,
 			document.querySelector("#book-pages").value,
-			document.querySelector("#book-genre").value
+			document.querySelector("#book-genre").value,
+			document.querySelector("#book-read").value
 		);
 		addToLibrary(newBook);
 		displayUpdate();
 
-		const form = document.querySelector("#dialog-form");
 		form.reset();
 		e.preventDefault();
+		dialog.close();
 	});
 
 const submitBookButtonMain = document
 	.querySelector("#submit-book-main")
-	.addEventListener("click", () => {
+	.addEventListener("click", (e) => {
+		const form = document.querySelector("#main-form");
+
+		if(form.checkValidity() == false){
+			form.reportValidity;
+			return;
+		}
 		const newBook = new Book(
 			document.querySelector("#book-title-main").value,
 			document.querySelector("#book-author-main").value,
 			document.querySelector("#book-pages-main").value,
-			document.querySelector("#book-genre-main").value
+			document.querySelector("#book-genre-main").value,
+			document.querySelector("#book-read-main").value
 		);
 		addToLibrary(newBook);
 		displayUpdate();
 
-		const form = document.querySelector("#main-form");
 		form.reset();
 		e.preventDefault();
 	});
