@@ -11,15 +11,18 @@ function Book(title, author, pages, genre, read) {
 	this.author = author;
 	this.pages = pages;
 	this.genre = genre;
-	this.read = read;
-	this.info = function () {
-		return `${this.title}, ${this.author}, ${this.pages}, ${this.genre}, ${this.read}`;
-	};
 	if (read == undefined) this.read = false;
-	this.toggleRead = function () {
-		this.read = !this.read;
+	else this.read = read;
+
+	this.info = function () {
+		return `${this.title}, ${this.author}, ${this.pages}, ${this.genre}`;
 	};
 
+	this.toggleRead = function () {
+		this.read = !this.read;
+		displayUpdate();
+		console.log(this)
+	};
 }
 
 function addToLibrary(book) {
@@ -42,38 +45,41 @@ function displayUpdate() {
 		const bookDisplay = document.createElement("p");
 		bookDisplay.textContent = `${bookNum}: ${book.info()}`;
 
-		updateList(bookDisplay, index);
+		updateList(book, bookDisplay, index);
 		updateTable(book, index);
 		updateCards(book, index);
 		bookNum++;
 	});
 }
 
-function updateList(bookDisplay, index) {
+function updateList(book, bookDisplay, index) {
 	libraryDisplay.appendChild(bookDisplay);
+
+	for (const key in book) {
+		if (book[key] == book.read) {
+			const bookKeyItem = document.createElement("span");
+			bookDisplay.appendChild(bookKeyItem);
+
+			if (book[key] == book.read) {
+				const bookKeyToggle = document.createElement("input");
+				bookKeyToggle.type = "checkbox";
+				bookKeyToggle.name = "book-read-toggle";
+				bookKeyToggle.id = "book-read-toggle";
+				bookKeyToggle.value = book.read;
+				bookKeyToggle.checked = book.read;
+
+				bookKeyItem.appendChild(bookKeyToggle);
+				bookKeyToggle.addEventListener("click", () => {
+					book.toggleRead();
+				});
+			}
+		}
+	}
 
 	const deleteButton = document.createElement("button");
 	deleteButton.className = "delete-button";
 	deleteButton.textContent = "X";
 	bookDisplay.appendChild(deleteButton);
-
-	// 		if (book[key] == book.read) {
-	// 		const bookKeyItem = document.createElement("td");
-	// 		bookRow.appendChild(bookKeyItem);
-
-	// 		if (book[key] == book.read) {
-	// 			const bookKeyToggle = document.createElement("input");
-	// 			bookKeyToggle.type = "checkbox";
-	// 			bookKeyToggle.name = "book-read-toggle";
-	// 			bookKeyToggle.id = "book-read-toggle";
-	// 			bookKeyToggle.value = book.read;
-	// 			bookKeyToggle.checked = book.read;
-
-	// 			bookKeyItem.appendChild(bookKeyToggle);
-	// 			bookKeyToggle.addEventListener("click", book.toggleRead() );
-	// 		}
-	// 	}
-	// }
 
 	deleteButton.addEventListener("click", () => {
 		libraryDisplay.removeChild(bookDisplay);
@@ -113,9 +119,11 @@ function updateTable(book, index) {
 				bookKeyToggle.id = "book-read-toggle";
 				bookKeyToggle.value = book.read;
 				bookKeyToggle.checked = book.read;
-
 				bookKeyItem.appendChild(bookKeyToggle);
-				bookKeyToggle.addEventListener("click", book.toggleRead() );
+
+				bookKeyToggle.addEventListener("click", () => {
+					book.toggleRead();
+				});
 			}
 		}
 	}
@@ -143,13 +151,39 @@ function updateCards(book, index) {
 	cardContainer.appendChild(bookCard);
 
 	for (const key in book) {
-		if (book[key] == book.title ||
+		if (
+			book[key] == book.title ||
 			book[key] == book.author ||
 			book[key] == book.pages ||
-			book[key] == book.genre) {
+			book[key] == book.genre
+		) {
 			const bookKeyItem = document.createElement("p");
 			bookKeyItem.textContent = book[key];
 			bookCard.appendChild(bookKeyItem);
+		}
+
+		if (book[key] == book.read) {
+			const bookKeyItem = document.createElement("div");
+			bookKeyItem.className = "card-read-check"
+			// bookKeyItem.textContent = "Read?";
+			bookCard.appendChild(bookKeyItem);
+
+
+			if (book[key] == book.read) {
+				const bookKeyToggle = document.createElement("input");
+				bookKeyToggle.type = "checkbox";
+				bookKeyToggle.name = "book-read-toggle";
+				bookKeyToggle.id = "book-read-toggle";
+				bookKeyToggle.className = "book-read-toggle book-read-toggle-button";
+				bookKeyToggle.value = book.read;
+				bookKeyToggle.checked = book.read;
+
+
+				bookKeyItem.appendChild(bookKeyToggle);
+				bookKeyToggle.addEventListener("click", () => {
+					book.toggleRead();
+				});
+			}
 		}
 	}
 
@@ -158,7 +192,7 @@ function updateCards(book, index) {
 	bookCard.appendChild(cardButtonContainer);
 
 	const cardDeleteButton = document.createElement("button");
-	cardDeleteButton.className = "delete-button card-delete-button";
+	cardDeleteButton.className = "delete-button";
 	cardDeleteButton.textContent = "X";
 
 	cardButtonContainer.appendChild(cardDeleteButton);
