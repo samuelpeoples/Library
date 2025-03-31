@@ -40,19 +40,18 @@ function displayUpdate() {
 	let bookNum = 1;
 
 	library.forEach((book) => {
-		const index = bookNum - 1;
 
 		const bookDisplay = document.createElement("p");
 		bookDisplay.textContent = `${bookNum}: ${book.info()}`;
 
-		updateList(book, bookDisplay, index);
-		updateTable(book, index);
-		updateCards(book, index);
+		updateList(book, bookDisplay);
+		updateTable(book);
+		updateCards(book);
 		bookNum++;
 	});
 }
 
-function updateList(book, bookDisplay, index) {
+function updateList(book, bookDisplay) {
 	libraryDisplay.appendChild(bookDisplay);
 
 	for (const key in book) {
@@ -83,13 +82,13 @@ function updateList(book, bookDisplay, index) {
 
 	deleteButton.addEventListener("click", () => {
 		libraryDisplay.removeChild(bookDisplay);
-		library.splice(index, 1);
+		library.splice(library.findIndex(a => a.id = book.id), 1);
 		console.log(library);
 		displayUpdate();
 	});
 }
 
-function updateTable(book, index) {
+function updateTable(book) {
 	const bookRow = document.createElement("tr");
 	bookTable.appendChild(bookRow);
 
@@ -139,13 +138,13 @@ function updateTable(book, index) {
 	tableButtonContainer.appendChild(tableDeleteButton);
 
 	tableDeleteButton.addEventListener("click", () => {
-		library.splice(index, 1);
+		library.splice(library.findIndex(a => a.id = book.id), 1);
 		console.log(library);
 		displayUpdate();
 	});
 }
 
-function updateCards(book, index) {
+function updateCards(book) {
 	const bookCard = document.createElement("div");
 	bookCard.className = "card";
 	cardContainer.appendChild(bookCard);
@@ -198,7 +197,7 @@ function updateCards(book, index) {
 	cardButtonContainer.appendChild(cardDeleteButton);
 
 	cardDeleteButton.addEventListener("click", () => {
-		library.splice(index, 1);
+		library.splice(library.findIndex(a => a.id = book.id), 1);
 		console.log(library);
 		displayUpdate();
 	});
