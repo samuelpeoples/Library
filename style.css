@@ -69,7 +69,7 @@ header {
 	background-color: rgb(187, 149, 99);
 }
 .delete-button {
-	background-color: lightcoral;
+	background-color: rgb(187, 149, 99);
 	margin-left: 10px;
 	padding: 3px 7px;
 	border-radius: 0.6rem;
@@ -78,10 +78,10 @@ header {
 	width: max-content;
 }
 .delete-button:hover {
-	background-color: red;
+	background-color: rgb(199, 166, 124);
 }
 .delete-button:active {
-	background-color: darkred;
+	background-color: rgb(179, 135, 78);
 }
 
 #dialog-form > * {
