@@ -15,7 +15,7 @@ function Book(title, author, pages, genre, read) {
 	else this.read = read;
 
 	this.info = function () {
-		return `${this.title}, ${this.author}, ${this.pages}, ${this.genre}`;
+		return `${this.title}, ${this.author}, ${this.pages}, ${this.genre}, ${this.read}`;
 	};
 
 	this.toggleRead = function () {
@@ -132,7 +132,7 @@ function updateTable(book, index) {
 	tableButtonContainer.className = "table-delete-container";
 
 	const tableDeleteButton = document.createElement("button");
-	tableDeleteButton.className = "delete-button table-delete-button";
+	tableDeleteButton.className = "delete-button";
 	tableDeleteButton.textContent = "X";
 
 	bookRow.lastChild.appendChild(tableButtonContainer);
@@ -225,7 +225,7 @@ const submitBookButton = document
 			document.querySelector("#book-author").value,
 			document.querySelector("#book-pages").value,
 			document.querySelector("#book-genre").value,
-			document.querySelector("#book-read").value
+			document.querySelector("#book-read").checked
 		);
 		addToLibrary(newBook);
 		displayUpdate();
@@ -249,7 +249,7 @@ const submitBookButtonMain = document
 			document.querySelector("#book-author-main").value,
 			document.querySelector("#book-pages-main").value,
 			document.querySelector("#book-genre-main").value,
-			document.querySelector("#book-read-main").value
+			document.querySelector("#book-read-main").checked
 		);
 		addToLibrary(newBook);
 		displayUpdate();

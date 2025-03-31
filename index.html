@@ -12,14 +12,91 @@
 			<logo id="company-logo">
 				<h1>The Library</h1>
 			</logo>
+			<button class="button" type="button" name="add-book" id="add-book">
+				Add Book? (Dialog)
+			</button>
 		</header>
 		<main>
-			<div id="display-container">
-				<div>
-					<button type="button" name="add-book" id="add-book">
-						Add Book? (Dialog)
-					</button>
-				</div>
+			<div>
+				<!-- <div id="display-container"> -->
+				<form id="main-form" action="post">
+					<fieldset>
+						<legend>Add a New Book?</legend>
+						<div>
+							<label for="book-title"
+								>What is the books title?</label
+							>
+							<input
+								type="text"
+								name="book-title"
+								id="book-title-main"
+								required />
+						</div>
+						<div>
+							<label for="book-author">Who is the author?</label>
+							<input
+								type="text"
+								name="book-author"
+								id="book-author-main"
+								required />
+						</div>
+
+						<div>
+							<label for="book-pages"
+								>How many pages is it?</label
+							>
+							<input
+								type="number"
+								name="book-pages"
+								id="book-pages-main"
+								step="10"
+								min="0"
+								required />
+						</div>
+						<div>
+							<label for="book-genre"
+								>What genre is this book?</label
+							>
+							<select
+								name="book-genre"
+								id="book-genre-main"
+								required>
+								<option value="" selected></option>
+								<option value="Sci-fi">Sci-Fi</option>
+								<option value="Fantasy">Fantasy</option>
+								<option value="Literature">Literature</option>
+								<option value="Thriller">Thriller</option>
+								<option value="Mystery">Mystery</option>
+								<option value="Non-Fiction">Non-Fiction</option>
+								<option value="Education">Education</option>
+							</select>
+						</div>
+
+						<div>
+							<label for="book-read">Have you read this?</label>
+							<input
+								type="checkbox"
+								name="book-read"
+								id="book-read-main" />
+
+							<input
+								class="button"
+								type="submit"
+								id="submit-book-main"
+								value="Submit Book" />
+							<!-- <button type="button" id="submit-book-main">Submit Book</button> -->
+							<button class="button" type="button" id="cancel-book-main">
+								Cancel
+							</button>
+						</div>
+					</fieldset>
+				</form>
+				<div id="library-card-container"></div>
+
+				<!-- </div> -->
+			</div>
+			<hr>
+			<div>
 				<div class="library-display"></div>
 				<table id="library-table">
 					<thead>
@@ -33,70 +110,7 @@
 					</thead>
 					<tbody id="library-table-content"></tbody>
 				</table>
-				<div id="library-card-container"></div>
 			</div>
-			<form id="main-form" action="post">
-				<fieldset>
-					<legend>Add a New Book?</legend>
-					<div>
-						<label for="book-title">What is the books title?</label>
-						<input
-							type="text"
-							name="book-title"
-							id="book-title-main"
-							required />
-					</div>
-					<div>
-						<label for="book-author">Who is the author?</label>
-						<input
-							type="text"
-							name="book-author"
-							id="book-author-main"
-							required />
-					</div>
-
-					<div>
-						<label for="book-pages">How many pages is it?</label>
-						<input
-							type="number"
-							name="book-pages"
-							id="book-pages-main"
-							step="10"
-							min="0"
-							required />
-					</div>
-					<div>
-						<label for="book-genre">What genre is this book?</label>
-						<select name="book-genre" id="book-genre-main" required>
-							<option value="" selected></option>
-							<option value="Sci-fi">Sci-Fi</option>
-							<option value="Fantasy">Fantasy</option>
-							<option value="Literature">Literature</option>
-							<option value="Thriller">Thriller</option>
-							<option value="Mystery">Mystery</option>
-							<option value="Non-Fiction">Non-Fiction</option>
-							<option value="Education">Education</option>
-						</select>
-					</div>
-
-					<div>
-						<label for="book-read">Have you read this?</label>
-						<input
-							type="checkbox"
-							name="book-read"
-							id="book-read-main" />
-
-						<input
-							type="submit"
-							id="submit-book-main"
-							value="Submit Book" />
-						<!-- <button type="button" id="submit-book-main">Submit Book</button> -->
-						<button type="button" id="cancel-book-main">
-							Cancel
-						</button>
-					</div>
-				</fieldset>
-			</form>
 		</main>
 
 		<article>
@@ -152,15 +166,16 @@
 					</div>
 					<div>
 						<input
+							class="button"
 							type="submit"
 							id="submit-book"
 							value="Submit Book" />
-						<button type="button" id="cancel-book">Cancel</button>
+						<button class="button" type="button" id="cancel-book">Cancel</button>
 					</div>
 				</form>
 			</dialog>
 		</article>
-		
+
 		<footer>made by me</footer>
 	</body>
 </html>
