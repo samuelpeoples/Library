@@ -6,23 +6,39 @@ const cardContainer = document.querySelector("#library-card-container");
 
 const dialog = document.querySelector("dialog");
 
-function Book(title, author, pages, genre, read) {
-	this.title = title;
-	this.author = author;
-	this.pages = pages;
-	this.genre = genre;
-	if (read == undefined) this.read = false;
-	else this.read = read;
+class Book {
+	constructor(title, author, pages, genre, read) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+		this.genre = genre;
+		if (read == undefined) {
+			this.read = false;
+		} else {
+			this.read = read;
+		}
+	}
 
-	this.info = function () {
+	get pages() {
+		return this._pages;
+	}
+	set pages(value) {
+		if (value <= 0) {
+			alert("not enough pages");
+			return;
+		}
+		this._pages = value;
+	}
+
+	info() {
 		return `${this.title}, ${this.author}, ${this.pages}, ${this.genre}, ${this.read}`;
-	};
+	}
 
-	this.toggleRead = function () {
+	toggleRead() {
 		this.read = !this.read;
 		displayUpdate();
-		console.log(this)
-	};
+		console.log(this);
+	}
 }
 
 function addToLibrary(book) {
@@ -40,7 +56,6 @@ function displayUpdate() {
 	let bookNum = 1;
 
 	library.forEach((book) => {
-
 		const bookDisplay = document.createElement("p");
 		bookDisplay.textContent = `${bookNum}: ${book.info()}`;
 
@@ -82,7 +97,10 @@ function updateList(book, bookDisplay) {
 
 	deleteButton.addEventListener("click", () => {
 		libraryDisplay.removeChild(bookDisplay);
-		library.splice(library.findIndex(a => a.id = book.id), 1);
+		library.splice(
+			library.findIndex((a) => (a.id = book.id)),
+			1
+		);
 		console.log(library);
 		displayUpdate();
 	});
@@ -138,7 +156,10 @@ function updateTable(book) {
 	tableButtonContainer.appendChild(tableDeleteButton);
 
 	tableDeleteButton.addEventListener("click", () => {
-		library.splice(library.findIndex(a => a.id = book.id), 1);
+		library.splice(
+			library.findIndex((a) => (a.id = book.id)),
+			1
+		);
 		console.log(library);
 		displayUpdate();
 	});
@@ -163,20 +184,19 @@ function updateCards(book) {
 
 		if (book[key] == book.read) {
 			const bookKeyItem = document.createElement("div");
-			bookKeyItem.className = "card-read-check"
+			bookKeyItem.className = "card-read-check";
 			// bookKeyItem.textContent = "Read?";
 			bookCard.appendChild(bookKeyItem);
-
 
 			if (book[key] == book.read) {
 				const bookKeyToggle = document.createElement("input");
 				bookKeyToggle.type = "checkbox";
 				bookKeyToggle.name = "book-read-toggle";
 				bookKeyToggle.id = "book-read-toggle";
-				bookKeyToggle.className = "book-read-toggle book-read-toggle-button";
+				bookKeyToggle.className =
+					"book-read-toggle book-read-toggle-button";
 				bookKeyToggle.value = book.read;
 				bookKeyToggle.checked = book.read;
-
 
 				bookKeyItem.appendChild(bookKeyToggle);
 				bookKeyToggle.addEventListener("click", () => {
@@ -197,7 +217,10 @@ function updateCards(book) {
 	cardButtonContainer.appendChild(cardDeleteButton);
 
 	cardDeleteButton.addEventListener("click", () => {
-		library.splice(library.findIndex(a => a.id = book.id), 1);
+		library.splice(
+			library.findIndex((a) => (a.id = book.id)),
+			1
+		);
 		console.log(library);
 		displayUpdate();
 	});
@@ -214,7 +237,7 @@ const submitBookButton = document
 	.addEventListener("click", (e) => {
 		const form = document.querySelector("#dialog-form");
 
-		if(form.checkValidity() == false){
+		if (form.checkValidity() == false) {
 			form.reportValidity;
 			return;
 		}
@@ -239,7 +262,7 @@ const submitBookButtonMain = document
 	.addEventListener("click", (e) => {
 		const form = document.querySelector("#main-form");
 
-		if(form.checkValidity() == false){
+		if (form.checkValidity() == false) {
 			form.reportValidity;
 			return;
 		}
